@@ -1,0 +1,22 @@
+RewriteEngine On
+RewriteBase /
+
+# Redirect old .html static pages
+RewriteRule ^about\.html$ /about [R=301,L]
+RewriteRule ^contact\.html$ /contact [R=301,L]
+RewriteRule ^privacy\.html$ /privacy [R=301,L]
+RewriteRule ^terms\.html$ /terms [R=301,L]
+RewriteRule ^categories\.html$ /categories [R=301,L]
+RewriteRule ^popular\.html$ /popular [R=301,L]
+RewriteRule ^tools\.html$ /tools [R=301,L]
+RewriteRule ^index\.html$ / [R=301,L]
+
+# Redirect old tool .html files
+RewriteRule ^tools/([a-z0-9-]+)\.html$ /tools/$1 [R=301,L]
+RewriteRule ^([a-z0-9-]+)\.html$ /tools/$1 [R=301,L]
+
+# Serve directory index without trailing issues
+DirectoryIndex index.html
+
+# 404
+ErrorDocument 404 /404/index.html
