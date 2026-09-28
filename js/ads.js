@@ -3,7 +3,7 @@
    before its script, each format loads once per page, banners load one after another so the global
    atOptions is never overwritten before invoke.js reads it, and every failure is contained.
    Debug: open any page with ?adsdebug=1 to log ad status in the browser console. */
-window.ADS_CONFIG=window.ADS_CONFIG||{nativeBanner:true,banner320x50:true,banner300x250:true,socialBar:false};
+window.ADS_CONFIG=window.ADS_CONFIG||{nativeBanner:false,banner320x50:true,banner300x250:true,socialBar:false};
 (()=>{try{
 const C=window.ADS_CONFIG,S=window.ToolBoxyAds={status:{},debug:/[?&]adsdebug=1/.test(location.search)};
 const log=(k,v)=>{S.status[k]=v;if(S.debug)console.info('[ToolBoxy ads]',k,v)};
