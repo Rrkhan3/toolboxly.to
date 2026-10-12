@@ -8,5 +8,5 @@ Upload the CONTENTS of this folder (index.html, css/, js/, tools/, assets/, robo
 After deployment, submit https://toolboxy.xyz/sitemap.xml in Google Search Console.
 
 ## Remaining configuration
-* Contact form: no endpoint or email exists in the project, so the form shows "currently unavailable". To enable it, set data-endpoint (a real Formspree/Netlify Forms URL) and/or data-email (a real address, used via mailto) on <form id="contact-form"> in contact.html.
-* Ads: in js/ads.js set ADS_CONFIG flags (Social Bar is enabled). Open any page with ?adsdebug=1 to log ad status in the console. The ad network must have toolboxy.xyz added/approved in its publisher dashboard, otherwise ads will not fill.
+- Contact form: no endpoint or email exists in the project, so the form shows "currently unavailable". To enable it, set `data-endpoint` (a real Formspree/Netlify Forms URL) and/or `data-email` (a real address, used via mailto) on `<form id="contact-form">` in `contact.html` (generated from `build.py`).
+- Ads: in `js/ads.js` set `ADS_CONFIG` flags (Social Bar is enabled). Open any page with `?adsdebug=1` to log ad status in the console. The ad network must have toolboxy.xyz added/approved in its publisher dashboard, otherwise ads will not fill.

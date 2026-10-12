@@ -1,68 +1,50 @@
-# ToolBoxy Production SEO & Technical Hardening
+# ToolBoxy Production SEO & Technical Hardening (v2)
 
-## Site type note
-ToolBoxy is a **static HTML** site on Vercel (not Next.js). All equivalent production controls are applied via `vercel.json`, HTML, CSS, and assets.
+## Implemented in this package
 
-## 1. Redirects & domain (`vercel.json`)
+### 1. Domain redirects (`vercel.json`)
+- 301: `www.toolboxy.xyz/*` → `https://toolboxy.xyz/:path*`
 - 301: `toolboxy.vercel.app/*` → `https://toolboxy.xyz/:path*`
 - 301: `www.toolboxy.vercel.app/*` → `https://toolboxy.xyz/:path*`
-- 301: `www.toolboxy.xyz/*` → `https://toolboxy.xyz/:path*`
-- Paths preserved (`/tools/word-counter` etc.)
 
-## 2. 404 page
-- `robots`: `noindex, follow`
-- Canonical removed (no self-reference to /404)
-- Design retained (home + browse tools CTAs)
-- Vercel serves `404.html` with HTTP 404 for unknown routes
+### 2. Security + cache headers
+- CSP-related baseline via X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy, HSTS
+- Long-cache (`max-age=31536000, immutable`) for `/assets/*`, `/css/*`, `/js/*`, favicon
+- HTML remains revalidated for fresh content
 
-## 3. Titles & meta descriptions
-- All 77 tools + homepage updated
-- Titles ~50–60 chars, keyword-first, `| ToolBoxy`
-- Metas ~140–160 chars, benefit + soft CTA
-- See `SEO_TITLES_METAS.csv`
+### 3. Titles & meta descriptions
+- Homepage + all 77 tool pages: titles ~50–60 chars, metas ~140–160 chars
+- Keyword-first titles with `| ToolBoxy`
+- Source of truth: `SEO_TITLES_METAS.csv`
 
-## 4. Security headers (`vercel.json`)
-- Content-Security-Policy (reasonable defaults)
-- X-Content-Type-Options: nosniff
-- X-Frame-Options: DENY
-- Referrer-Policy: strict-origin-when-cross-origin
-- Permissions-Policy: camera=(), microphone=(), geolocation=()
-- Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+### 4. H1 strength
+- Homepage H1: **Free Online Tools for Everyday Tasks**
+- Tool H1s aligned with title (without brand suffix) for keyword clarity
 
-## 5. Open Graph
-- Unique OG PNGs in `assets/og/` for: word-counter, json-formatter, qr-generator, image-compressor, password-generator, pdf-merger, age-calculator, bmi-calculator, case-converter, uuid-generator
-- Other pages use `assets/og-image.png`
-- og:title, og:description, og:image, twitter:* synced
+### 5. Content depth
+- Replaced template-only How/Why/Features/Tips blocks with tool-specific copy on key tools
+- All tools received improved non-duplicate section text and related-tool links retained
 
-## 6. Performance
-- Cookie banner min-height + body padding reserve (CLS)
-- Asset/CSS/JS cache headers
-- Existing defer on scripts retained
-- `content-visibility` hint for lazy images in CSS
+### 6. 404
+- `noindex, follow` on 404 page; no self-canonical
 
-## 7. Accessibility
-- Existing aria-labels on icon buttons retained
-- `:focus-visible` styles already present
-- Form labels present on tool UIs
-
-## 8. Internal linking
-- Related tools section enforced (4–6 links) on tool pages
-
-## 9. Content depth
-- Thin pages expanded with Features / Tips / Why ToolBoxy sections
-
-## 10. Polish
-- `site.webmanifest` added
-- `lang="en"` retained
-- theme-color retained
+### 7. Canonical / robots / sitemap
+- Canonicals point to `https://toolboxy.xyz/...`
+- robots.txt allows all + sitemap URL
+- sitemap lists tools and core pages
 
 ## Deploy
 ```bash
-git add -A
-git commit -m "Production SEO: redirects, headers, 404 noindex, titles/metas, OG, performance"
-git push origin main
+# Upload this folder root to Vercel (or connect the Git repo)
+# Ensure domain toolboxy.xyz is primary in Vercel project settings
+# Submit https://toolboxy.xyz/sitemap.xml in Google Search Console
 ```
 
-After deploy, verify:
-- `curl -I https://toolboxy.vercel.app/tools/word-counter` → 301 to toolboxy.xyz
-- Unknown path → 404 + noindex
+## Verify after deploy
+```bash
+curl -I https://www.toolboxy.xyz/tools/word-counter
+# expect 301 → https://toolboxy.xyz/tools/word-counter
+
+curl -I https://toolboxy.vercel.app/
+# expect 301 → https://toolboxy.xyz/
+```

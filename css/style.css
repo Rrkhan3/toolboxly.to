@@ -278,3 +278,14 @@ body.tb-cookie-modal-open { overflow: hidden; }
   .tb-cookie-banner-actions { width: 100%; }
   .tb-cookie-banner-actions .tb-btn { flex: 1 1 auto; text-align: center; }
 }
+
+
+/* CLS reserve: cookie banner fixed bottom — avoid layout jump */
+.tb-cookie-banner {
+  min-height: 72px;
+  contain: layout;
+}
+body.tb-has-cookie-banner {
+  padding-bottom: 88px;
+}
+img[loading="lazy"] { content-visibility: auto; }
